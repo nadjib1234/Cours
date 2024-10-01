@@ -380,16 +380,36 @@
                 });
             });
         });
-
+    
         // Animation on scroll
         function animateOnScroll() {
             const elements = document.querySelectorAll('.animate__animated');
             elements.forEach(element => {
                 if (isElementInViewport(element)) {
                     element.style.visibility = 'visible';
+                    element.classList.add('animate__fadeInUp');
                 }
             });
         }
-
+    
         function isElementInViewport(el) {
-            const rect = el.getB
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+    
+        // Initial check and add scroll event listener
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    
+        // Refresh animations on window resize
+        window.addEventListener('resize', animateOnScroll);
+    </script>
+    </body>
+    </html>
